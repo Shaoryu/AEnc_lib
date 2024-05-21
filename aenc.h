@@ -2,6 +2,7 @@
 #define _AENC_H_
 
 #include "mbed.h"
+#include "CANMotor.h"
 
 
 class aenc : public SPI
@@ -10,16 +11,19 @@ public:
     
     
     aenc(PinName miso,PinName clk,PinName cs);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
+    aenc(PinName miso,PinName clk,PinName cs,int target);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
     void set_target(int target);
     float Kp,Ki,Kd;//pidのゲイン。
     float duty;//デューティ比。マックス0.3,最小0.01よりちっちゃい
     float angle_point;//目標(deg)。
 
     
-    int get_data();
-    float pid_con();
-    float pid_con(float kp,float ki,float kd);
-    
+    void get_data();
+    int pid_con();
+    int pid_con(float kp,float ki,float kd);
+
+    int flag;
+
 private:
     
     DigitalIn _cs;
@@ -29,7 +33,6 @@ private:
     float diff;
 
     float i;
-    int flag;
     float last_diff;
     float d;
     
