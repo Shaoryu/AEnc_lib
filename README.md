@@ -3,6 +3,12 @@
 //・一応555想定。
 //・ゲイン調整は甘いので、突如変わるかも
 //・以下サンプルプログラム。きもい。
+
+
+
+
+
+
 #include "mbed.h"
 #include "CANMotor.h"
 #include "aenc.h"
