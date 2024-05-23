@@ -10,14 +10,15 @@ aenc::aenc(PinName mosi,PinName miso,PinName clk,PinName cs,int target):SPI(mosi
 }
 
 void aenc::set_target(int target){
-    angle_point=(float)target;
+    angle_point=(float)(target % 360);
 }
 
-void aenc::get_data(){
+float aenc::get_data(){
     _cs=0;
     val=write(0x00);
     _cs=1;
     res=val/4096.0f*360.0f;
+    return res;
 }
 
 int aenc::pid_con(){
@@ -34,15 +35,14 @@ int aenc::pid_con(){
 
     duty=diff*KP+i*KI+d*KD;
     if(duty*duty<0.000001f){
-        flag=Brake;
+        state=Brake;
     }else if(duty > 0.0f){
-        flag=CCW;
+        state=CCW;
     }else{
         duty*=-1;
-        flag=CW;
+        state=CW;
     }
-    return flag;
-    //
+    return state;
 }
 
 int aenc::pid_con(float kp,float ki,float kd){
@@ -51,6 +51,9 @@ int aenc::pid_con(float kp,float ki,float kd){
     KD=kd;
     pid_con();
     //
-    return flag;
+    return state;
 }
+
+
+
 
