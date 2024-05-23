@@ -14,15 +14,15 @@ public:
     aenc(PinName mosi,PinName miso,PinName clk,PinName cs,int target);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
     void set_target(int target);
     float KP,KI,KD;//pidのゲイン。
-    float duty;//デューティ比。マックス0.3,最小0.01よりちっちゃい
+    static float duty;//デューティ比。マックス0.3,最小0.01よりちっちゃい
     float angle_point;//目標(deg)。
 
     
-    void get_data();
+    float get_data();
     int pid_con();
     int pid_con(float kp,float ki,float kd);
 
-    int flag;
+    static int state;
 
 private:
     
@@ -45,4 +45,3 @@ private:
 };
 
 #endif
-
