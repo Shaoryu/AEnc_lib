@@ -10,10 +10,10 @@ class aenc : public SPI
 public:
     
     
-    aenc(PinName miso,PinName clk,PinName cs);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
-    aenc(PinName miso,PinName clk,PinName cs,int target);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
+    aenc(PinName mosi,PinName miso,PinName clk,PinName cs);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
+    aenc(PinName mosi,PinName miso,PinName clk,PinName cs,int target);//miso(DO),clk(CLK),cs(CSn)※mosiは使っていないよ;
     void set_target(int target);
-    float Kp,Ki,Kd;//pidのゲイン。
+    float KP,KI,KD;//pidのゲイン。
     float duty;//デューティ比。マックス0.3,最小0.01よりちっちゃい
     float angle_point;//目標(deg)。
 
@@ -26,7 +26,7 @@ public:
 
 private:
     
-    DigitalIn _cs;
+    DigitalOut _cs;
 
     float res;
     int val;
@@ -35,7 +35,14 @@ private:
     float i;
     float last_diff;
     float d;
+    enum{
+        Free,
+        CW,
+        CCW,
+        Brake,
+    };
     
 };
 
 #endif
+
