@@ -32,7 +32,9 @@ private:
     float i;
     float last_diff;
     float d;
-    float KP,KI,KD;//pidのゲイン。
+    float KP=1.0f/360.0f*2.0f;
+    float KI=1.0f/360.0f*0.001f;
+    float KD=1.0f/360.0f*0.001f;//pidのゲイン。
     enum{
         Free,
         CW,
