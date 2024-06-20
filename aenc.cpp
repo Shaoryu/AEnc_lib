@@ -1,12 +1,12 @@
 #include "mbed.h"
 #include "aenc.h"
-aenc::aenc(PinName mosi,PinName miso,PinName clk,PinName cs):SPI(mosi,miso,clk),_cs(cs){
-    format(12,1);
+aenc::aenc(SPI &spi,PinName cs,int target):SPi(spi),_cs(cs){
+    SPi.format(12,1);
+    aenc::set_target(target);
 }
 
-aenc::aenc(PinName mosi,PinName miso,PinName clk,PinName cs,int target):SPI(mosi,miso,clk),_cs(cs){
-    format(12,1);
-    aenc::set_target(target);
+aenc::aenc(SPI &spi,PinName cs):SPi(spi),_cs(cs){
+    SPi.format(12,1);
 }
 
 void aenc::set_target(int target){
@@ -15,7 +15,7 @@ void aenc::set_target(int target){
 
 float aenc::get_data(){
     _cs=0;
-    val=write(0x00);
+    val=SPi.write(0x00);
     _cs=1;
     res=val/4096.0f*360.0f;
     return res;
@@ -53,7 +53,4 @@ int aenc::pid_con(float kp,float ki,float kd){
     //
     return state;
 }
-
-
-
 
