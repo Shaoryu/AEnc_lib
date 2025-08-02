@@ -1,4 +1,4 @@
-# //AEnc_lib
+# AEnc_lib
 //・CANMotorを用いたアブソリュートエンコーダの角度制御。
 //・一応555想定。
 //・ゲイン調整は甘いので、突如変わるかも
@@ -8,7 +8,7 @@
 
 
 
-
+```cpp
 #include "mbed.h"
 #include "CANMotor.h"
 #include "aenc.h"
@@ -34,3 +34,4 @@ int main()
         ThisThread::sleep_for(5ms);
     }
 }
+```
